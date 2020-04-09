@@ -1,0 +1,129 @@
+---
+variable name: RJCperson_info
+use objects: True
+data:
+  - First Name: Rhea
+    Last Name: Jolley
+    Age: 21
+    Hobbies: Piano
+    Do you like pets?: True
+  - First Name: Paula
+    Last Name: Jolley
+    Age: 57
+    Hobbies: Cooking
+    Do you like pets?: True
+  - First Name: Paul
+    Last Name: Jolley
+    Age: 63
+    Hobbies: Guitar
+    Do you like Pets?: True
+  - First Name: Sam
+    Last Name: Jolley
+    Age: 18
+    Hobbies: Rugby
+    Do you like pets?: True
+---
+code: |
+  RJCpersonal_info_dnu = [
+    {'First Name':'Rhea','Last Name':'Jolley', 'Age':21, 'Hobbies':'Piano', 'Do you like pets?':True},
+    {'First Name':'Paula','Last Name':'Jolley', 'Age':57, 'Hobbies':'Cooking', 'Do you like pets?':True},
+    {'First Name':'Paul','Last Name':'Jolley', 'Age':63, 'Hobbies':'Guitar', 'Do you like pets?':True},
+    {'First Name':'Sam','Last Name':'Jolley', 'Age':18, 'Hobbies:':'Rugby', 'Do you like pets?':True},
+  ]
+---
+mandatory: True
+question:  Basic Information 
+subquestion: |
+  #### Jolley Family Info
+  
+  ${ RJCcolumn_header }
+  ${ RJCdashes }
+  %for RJCitem in RJCtable_rows:
+  ${ RJCitem }
+  %endfor
+
+buttons:
+  - "Continue": continue
+  - "Exit": exit
+  - "Restart": restart
+---
+mandatory: True
+question:  |
+ Is the information below correct for Rhea?
+field: target_variable
+choices: 
+ - First name: Rhea
+ - Last name: Jolley
+ - Age: 21
+ - Hobbies: Piano
+ - Do you like pets?: True
+---
+mandatory: True
+question: |
+ Is the information below correct for Paula?
+field: target_variable
+choices:
+ - First name: Paula
+ - Last name: Jolley
+ - Age: 57
+ - Hobbies: Cooking
+ - Do you like pets?: True
+---
+mandatory: True
+question:  |
+ Is the information below correct for Paul?
+field: target_variable
+choices: 
+ - First name: Paul
+ - Last name: Jolley
+ - Age: 63
+ - Hobbies: Guitar
+ - Do you like pets?:True
+---
+mandatory: True
+question:  |
+ Is the information below correct for Sam?
+field: target_variable
+choices: 
+ - First name: Sam
+ - Last name: Jolley
+ - Age: 18
+ - Hobbies: Rugby
+ - Do you like pets?:True
+---
+# Creates the column header
+# We'll create the column headers in this code block.
+code: |
+  # Initialise the variable as empty. Gives us a starting point
+  RJCcolumn_header = ""
+  
+
+  for RJCitem in RJCperson_info[0]:
+    RJCcolumn_header += RJCitem + '|'
+  
+
+  RJCcolumn_header = RJCcolumn_header[:-1]
+---
+
+code: |
+  
+  RJCdashes = "---"
+  for i in range(len(RJCperson_info[0]) - 1):
+    RJCdashes += "|---"
+---
+
+code: | 
+  
+  RJCtable_rows = []
+  
+  
+  for RJCitem in RJCperson_info:
+      
+      MDrow = ""
+      for RJCkey in RJCitem:
+        MDrow += str(RJCitem[RJCkey]) + '|'
+      
+      MDrow = MDrow[:-1]
+      
+      RJCtable_rows.append(MDrow)
+---
